@@ -1,0 +1,42 @@
+@import url("http://fonts.gooogleapis.com/css2?family=Poppins:wght@300;400;500;60;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif; 
+}/* Styles for the carousel container */
+  #carouselExample {
+    width: 100%; /* Adjust as needed */
+    height: 500px; /* Center the carousel */
+    margin-top: 125px;
+    margin-bottom: 30px;
+
+  }
+  
+  /* Styles for the carousel items */
+  .carousel-item img {
+    width: 100%; /* Ensure images fill the carousel container */
+    height: 500px; /* Maintain aspect ratio */
+  }
+  .text{
+    color: #fff;
+    margin-top: 50px;
+    font-size: 60px;
+    text-align: center;
+  }
+  .game{
+    color: #fff;
+    margin-top: 50px;
+    margin-left: 50px;
+    font-size: 32px;
+    text-align: left;
+  }
+  .games img{
+    width: 200px;
+    height: 250px;
+    margin-top: 50px;
+    border: 2px  ;
+    margin: 50px ;
+  }
+  

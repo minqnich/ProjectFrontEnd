@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Management</title>
+    <link rel="stylesheet" href="/css/style_backoffice.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript Bundle (Bootstrap JS และ Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+
+  </head>
+
+  <body>
+    <header class="header">
+      <a href="#" class="logo"
+        ><img src="img/PS5.png" alt="logo" width="150" height="50"
+      /></a>
+      <nav class="navbar">
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+          >
+            ADMIN
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><a class="dropdown-item" href="#">Category Management</a></li>
+            <li>
+              <a class="dropdown-item" href="/productCategory"
+                >Product Management</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/saleHistory"
+                >Sales History</a
+              >
+            </li>
+          </ul>
+        </div>
+        <a href="/login">LOG OUT</a>
+      </nav>
+    </header>
+
+    
+    <div class="product-container">
+        <h2 class="headline-product fw-bolder">All of product</h2>
+        <button class="add-button" data-bs-toggle="modal" data-bs-target="#addProductModal">+</button>
+      </div>
+      <div class="bg-categories">
+        <div class="container-fluid row">
+        <div class="row row-cols-lg-3 row-cols-md-4 row-cols-sm-6">
+          <% products.forEach(product => { %>
+          <div class="col mb-5 position-relative">
+            <img src="<%= product.product_images %>" alt="<%= product.product_name %>" />
+            <div class="btn-group position-absolute top-0 start-55 translate-middle pb-4">
+              <button class="btn btn-secondary">Edit</button>
+              <button class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>   
+    </div>   
+
+ <!-- Modal -->
+ <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="productName" name="productName" required>
+          </div>
+          <div class="mb-3">
+            <label for="productDescription" class="form-label">Product Description</label>
+            <textarea class="form-control" id="productDescription" name="productDescription" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="productImages" class="form-label">Product Images</label>
+            <input type="text" class="form-control" id="productImages" name="productImages" required>
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Product Price</label>
+            <input type="number" class="form-control" id="productPrice" name="productPrice" step="0.01" required>
+          </div>
+          <div class="mb-3">
+            <label for="productPricePromotion" class="form-label">Product Price Promotion</label>
+            <input type="number" class="form-control" id="productPricePromotion" name="productPricePromotion" step="0.01" required>
+          </div>
+          <div class="mb-3">
+            <label for="productSalesCount" class="form-label">Product Sales Count</label>
+            <input type="number" class="form-control" id="productSalesCount" name="productSalesCount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('addProductForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const productName = document.getElementById('productName').value;
+      const productDescription = document.getElementById('productDescription').value;
+      const productImages = document.getElementById('productImages').value;
+      const productPrice = document.getElementById('productPrice').value;
+      const productPricePromotion = document.getElementById('productPricePromotion').value;
+      const productSalesCount = document.getElementById('productSalesCount').value;
+
+      try {
+        const response = await fetch('/api/addProduct', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            productName,
+            productDescription,
+            productImages,
+            productPrice,
+            productPricePromotion,
+            productSalesCount
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add product');
+        }
+
+        alert('Product added successfully');
+        $('#addProductModal').modal('hide');
+        window.location.reload();
+      } catch (error) {
+        console.error('Error adding product:', error);
+        alert('Failed to add product');
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>

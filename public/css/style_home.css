@@ -1,0 +1,121 @@
+@import url("http://fonts.gooogleapis.com/css2?family=Poppins:wght@300;400;500;60;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif; 
+}
+  #carouselExample {
+    width: 100%; /* Adjust as needed */
+    height: 500px; /* Center the carousel */
+    margin-top: 90px;
+    margin-bottom: 20%;
+
+  }
+  
+  .carousel-item img {
+    width: 100%; 
+    height: 720px; 
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: auto; /* Adjust button size if needed */
+    color: white; /* Button text color */
+    border: none; /* Remove button border */
+  }
+  
+  /* Optional: Adjust the position of the control buttons */
+  .carousel-control-prev {
+    left: 0;
+  }
+  
+  .carousel-control-next {
+    right: 0;
+  }
+  
+.TextTop5{
+    color: #fff;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-bottom: 2%;
+    font-size: 24px;
+}
+
+
+.container {
+  
+  position: relative;
+  width: auto;
+  height: 600px ;
+  display:flex ;
+  flex-wrap: wrap;
+
+}
+
+.img-container{
+  width: 100%; /* Adjust as needed */
+  height: 300px;
+  margin-top: 200px;
+  margin-bottom: 150px;
+  /* margin-bottom: 125px; */
+}
+
+.card-title {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* เปลี่ยนฟ้อนต์เป็น Arial */
+  font-size: 20px; /* ปรับขนาดฟ้อนต์ตามต้องการ */
+  color: whitesmoke; /* เปลี่ยนสีข้อความตามต้องการ */
+}
+
+.games img{
+  width: 150px;
+  height: 200px;
+  margin: 0;
+  margin-top: 90px;
+  border: 10px  ;
+  margin: 10px ;
+  align-items: center;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.card .card-body {
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 20px;
+}
+
+.card .card-body .btn{
+  background: rgb(132,132,227);
+}
+
+.games{
+  display: flex;
+    align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางในแนวนอน */
+    text-align: center;
+}
+.games .card {
+  margin: 60px;
+  border-radius: 30px;
+  border: 2px #fff;
+  background: rgb(84,92,103);
+  background: linear-gradient(0deg, rgba(84,92,103,1) 0%, rgba(9,12,17,1) 63%);
+}
+
+.message-container {
+  display: inline-block;
+  margin: 50px;
+  width: 200px;
+  height: 70px; 
+  background-color: white;
+  padding: 20px;
+  top:0;
+}
+
+.message {
+  color: black;
+  font-size: 14px;
+}
+
+
