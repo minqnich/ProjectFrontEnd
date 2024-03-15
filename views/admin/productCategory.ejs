@@ -83,7 +83,7 @@
       </div>   
     </div>   
 
- <!-- Modal -->
+ <!-- Modal for adding product -->
  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -93,6 +93,15 @@
       </div>
       <div class="modal-body">
         <form id="addProductForm">
+          <div class="mb-3">
+            <label for="productCategory" class="form-label">Product Category</label>
+            <select class="form-select" id="productCategory" name="productCategory" required>
+              <option value="" selected disabled>Select Category</option>
+              <% categories.forEach(category => { %>
+                <option value="<%= category.id %>"><%= category.category_name %></option>
+              <% }); %>                  
+            </select>
+          </div>            
           <div class="mb-3">
             <label for="productName" class="form-label">Product Name</label>
             <input type="text" class="form-control" id="productName" name="productName" required>
@@ -124,46 +133,123 @@
   </div>
 </div>
 
+<!-- Modal for Edit Product -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProductModalLabel">Edit Product Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editProductForm">
+          <div class="mb-3">
+              <label for="editProductCategory" class="form-label">Product Category</label>
+              <select class="form-select" id="editProductCategory" name="editProductCategory">
+                <% categories.forEach(category => { %>
+                  <option value="<%= category._id %>"><%= category.name %></option>
+                <% }); %>
+              </select>              
+          </div>
+          <div class="mb-3">
+            <label for="editProductName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="editProductName" name="editProductName" required>
+          </div>
+          <!-- ส่วนอื่น ๆ ของฟอร์ม -->
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById('addProductForm').addEventListener('submit', async function (event) {
-      event.preventDefault();
-      const productName = document.getElementById('productName').value;
-      const productDescription = document.getElementById('productDescription').value;
-      const productImages = document.getElementById('productImages').value;
-      const productPrice = document.getElementById('productPrice').value;
-      const productPricePromotion = document.getElementById('productPricePromotion').value;
-      const productSalesCount = document.getElementById('productSalesCount').value;
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById('addProductForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const productName = document.getElementById('productName').value;
+    const productDescription = document.getElementById('productDescription').value;
+    const productImages = document.getElementById('productImages').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const productPricePromotion = document.getElementById('productPricePromotion').value;
+    const productSalesCount = document.getElementById('productSalesCount').value;
+    const productCategory = document.getElementById('productCategory').value; // เพิ่มการดึงค่า productCategory จากฟอร์ม
 
-      try {
-        const response = await fetch('/api/addProduct', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            productName,
-            productDescription,
-            productImages,
-            productPrice,
-            productPricePromotion,
-            productSalesCount
-          })
-        });
+    try {
+      const response = await fetch('/api/addProduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productName,
+          productDescription,
+          productImages,
+          productPrice,
+          productPricePromotion,
+          productSalesCount,
+          productCategory // เพิ่ม productCategory ในการส่งข้อมูล
+        })
+      });
 
-        if (!response.ok) {
-          throw new Error('Failed to add product');
-        }
-
-        alert('Product added successfully');
-        $('#addProductModal').modal('hide');
-        window.location.reload();
-      } catch (error) {
-        console.error('Error adding product:', error);
-        alert('Failed to add product');
+      if (!response.ok) {
+        throw new Error('Failed to add product');
       }
-    });
+
+      alert('Product added successfully');
+      $('#addProductModal').modal('hide');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error adding product:', error);
+      alert('Failed to add product');
+    }
   });
+});
+
+// Add event listener for edit product form submission
+document.getElementById('editProductForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const productId = document.getElementById('editProductId').value; // เพิ่มการดึงค่า ID ของสินค้า
+    const productName = document.getElementById('editProductName').value;
+    const productDescription = document.getElementById('editProductDescription').value;
+    const productImages = document.getElementById('editProductImages').value;
+    const productPrice = document.getElementById('editProductPrice').value;
+    const productPricePromotion = document.getElementById('editProductPricePromotion').value;
+    const productSalesCount = document.getElementById('editProductSalesCount').value;
+    const productCategory = document.getElementById('editProductCategory').value;
+
+    try {
+      const response = await fetch(`/editProduct/${productId}`, { // ปรับเปลี่ยน URL ที่ส่งไปยังเซิร์ฟเวอร์เพื่อให้มีรูปแบบที่ถูกต้อง
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productName,
+          productDescription,
+          productImages,
+          productPrice,
+          productPricePromotion,
+          productSalesCount,
+          productCategory
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update product');
+      }
+
+      alert('Product updated successfully');
+      $('#editProductModal').modal('hide');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error updating product:', error);
+      alert('Failed to update product');
+    }
+});
+
+
 </script>
 
 

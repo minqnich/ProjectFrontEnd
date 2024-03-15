@@ -1,5 +1,6 @@
 const BaseSQLModel = require('./baseSQLModel');
-
+const pool = require('../config/db');
+//this is product.js
 class Product extends BaseSQLModel {
   constructor() {
     super('Products');

@@ -1,5 +1,5 @@
 const pool = require('../config/db');
-
+//this is baseSQLModel.js
 class BaseSQLModel {
   constructor(tableName) {
     this.tableName = tableName;

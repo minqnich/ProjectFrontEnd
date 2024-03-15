@@ -6,6 +6,7 @@ const router = express.Router(); // เปลี่ยนจากการป�
 const Product = require('./model/product');
 const connection = require("./config/db");
 const ProductRouter = require('./model/product');
+const Category = require('./model/category');
 
 
 app.set('view engine', 'ejs'); // Set view engine to EJS
@@ -203,12 +204,24 @@ app.put('/api/updateCategory/:id', (req, res) => {
     });
 });
 
+
+// app.get('/productCategory', async (req, res) => {
+    // try {
+       //  const products = await Product.findAllWithCategory();
+       // res.render('admin/productCategory', { products });
+    // } catch (error) {
+       // console.error('Error rendering product category:', error);
+       // res.status(500).send('Internal Server Error');
+   //  }
+// });
+
 app.get('/productCategory', async (req, res) => {
     try {
-        // Call findAllWithCategory function to get products with categories
-        const products = await Product.findAllWithCategory();
-        // Render productCategory.ejs with products data
-        res.render('admin/productCategory', { products });
+        const categories = await Category.findAll(); // ดึงข้อมูล category จากฐานข้อมูล
+        const products = await Product.findAllWithCategory(); // ดึงข้อมูลสินค้าพร้อมกับ category จากฐานข้อมูล
+        console.log(categories); // เพิ่มบรรทัดนี้เพื่อตรวจสอบว่า categories มีค่าหรือไม่
+        console.log(products); // เพิ่มบรรทัดนี้เพื่อตรวจสอบว่า products มีค่าหรือไม่
+        res.render('admin/productCategory', { categories, products });
     } catch (error) {
         console.error('Error rendering product category:', error);
         res.status(500).send('Internal Server Error');
@@ -216,23 +229,14 @@ app.get('/productCategory', async (req, res) => {
 });
 
 
-app.get('/productCategory', async (req, res) => {
-    try {
-        const products = await Product.findAllWithCategory();
-        res.render('admin/productCategory', { products });
-    } catch (error) {
-        console.error('Error rendering product category:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 // เพิ่มสินค้าใหม่
 app.post('/api/addProduct', (req, res) => {
-    const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount } = req.body;
+    const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory } = req.body; // เพิ่ม productCategory ในการรับค่าจาก req.body
 
     // เพิ่มข้อมูลผลิตภัณฑ์ลงในฐานข้อมูล
-    const sql = 'INSERT INTO products (product_name, product_description, product_images, product_price, product_price_promotion, product_sales_count) VALUES (?, ?, ?, ?, ?, ?)';
-    connection.query(sql, [productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount], (err, result) => {
+    const sql = 'INSERT INTO products (product_name, product_description, product_images, product_price, product_price_promotion, product_sales_count, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)'; // เปลี่ยนชื่อคอลัมน์ product_category เป็น category_id
+    connection.query(sql, [productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory], (err, result) => {
         if (err) {
             console.error('Error executing SQL query:', err);
             return res.status(500).json({ error: 'Error executing SQL query: ' + err.message });
@@ -241,6 +245,55 @@ app.post('/api/addProduct', (req, res) => {
         res.sendStatus(200); // ส่งกลับสถานะ 200 OK เมื่อเพิ่มผลิตภัณฑ์สำเร็จ
     });
 });
+
+app.get('/editProduct/:id', async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const product = await Product.findById(productId); // ใช้เมธอด findById เพื่อดึงข้อมูลสินค้าจาก ID ที่ระบุ
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+        // ดึงข้อมูล category เพื่อให้สามารถแสดงใน dropdown
+        const categories = await Category.find();
+        res.render('productCategory', { product, categories }); // ส่งข้อมูลสินค้าและ category ไปแสดงในฟอร์ม productCategory.ejs
+    } catch (error) {
+        console.error('Error rendering edit product page:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+app.post('/editProduct/:id', async (req, res) => {
+    const productId = req.params.id;
+    const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory } = req.body;
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(productId, {
+            productName,
+            productDescription,
+            productImages,
+            productPrice,
+            productPricePromotion,
+            productSalesCount,
+            productCategory
+        }, { new: true });
+
+        if (!updatedProduct) {
+            return res.status(404).send('Product not found');
+        }
+
+        // ดึงข้อมูลสินค้าทั้งหมดอีกรอบเพื่อใช้สำหรับแสดงผลหน้า productCategory.ejs
+        const products = await Product.findAll();
+        // ดึงข้อมูลหมวดหมู่ทั้งหมด
+        const categories = await Category.findAll();
+        // ส่งข้อมูลสินค้าและข้อมูลหมวดหมู่ไปยังหน้า productCategory.ejs
+        res.render('productCategory', { products, categories, product: updatedProduct });
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 
 
 
