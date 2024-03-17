@@ -74,7 +74,7 @@
             <div class="col mb-5 position-relative" id="product_<%= product.id %>">
               <img src="<%= product.product_images %>" alt="<%= product.product_name %>" />
             <div class="btn-group position-absolute top-0 start-55 translate-middle pb-4">
-              <button class="btn btn-secondary" onclick="openEditModal('<%= product._id %>')">Edit</button>
+              <button class="btn btn-secondary" onclick="openEditModal('<%= product.id %>')">Edit</button>
               <button class="btn btn-danger" onclick="deleteProduct('<%= product.id %>')">Delete</button> <!-- Add onclick event -->
             </div>
           </div>
