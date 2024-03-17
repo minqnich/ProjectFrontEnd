@@ -228,6 +228,18 @@ app.get('/productCategory', async (req, res) => {
     }
 });
 
+app.get('/categoryManage', async (req, res) => {
+    try {
+        const categories = await Category.findAll(); // ดึงข้อมูล category จากฐานข้อมูล
+        const products = await Product.findAllWithCategory(); // ดึงข้อมูลสินค้าพร้อมกับ category จากฐานข้อมูล
+        console.log(categories); // เพิ่มบรรทัดนี้เพื่อตรวจสอบว่า categories มีค่าหรือไม่
+        console.log(products); // เพิ่มบรรทัดนี้เพื่อตรวจสอบว่า products มีค่าหรือไม่
+        res.render('admin/categoryManage', { categories, products });
+    } catch (error) {
+        console.error('Error rendering product category:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 // เพิ่มสินค้าใหม่
@@ -246,21 +258,22 @@ app.post('/api/addProduct', (req, res) => {
     });
 });
 
-app.get('/editProduct/:id', async (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
     const productId = req.params.id;
     try {
-        const product = await Product.findById(productId); // ใช้เมธอด findById เพื่อดึงข้อมูลสินค้าจาก ID ที่ระบุ
+        // ดึงข้อมูลสินค้าจากฐานข้อมูลโดยใช้ ID ที่ระบุ
+        const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).send('Product not found');
         }
-        // ดึงข้อมูล category เพื่อให้สามารถแสดงใน dropdown
-        const categories = await Category.find();
-        res.render('productCategory', { product, categories }); // ส่งข้อมูลสินค้าและ category ไปแสดงในฟอร์ม productCategory.ejs
+        // ส่งข้อมูลสินค้ากลับเป็น JSON
+        res.json(product);
     } catch (error) {
-        console.error('Error rendering edit product page:', error);
+        console.error('Error fetching product data:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 app.post('/editProduct/:id', async (req, res) => {
     const productId = req.params.id;
     const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory } = req.body;
@@ -285,19 +298,12 @@ app.post('/editProduct/:id', async (req, res) => {
         // ดึงข้อมูลหมวดหมู่ทั้งหมด
         const categories = await Category.findAll();
         // ส่งข้อมูลสินค้าและข้อมูลหมวดหมู่ไปยังหน้า productCategory.ejs
-        res.render('productCategory', { products, categories, product: updatedProduct });
+        res.render('admin/productCategory', { products, categories, product: updatedProduct });
     } catch (error) {
         console.error('Error updating product:', error);
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
-
-
 
 module.exports = router;
 // Start the server
