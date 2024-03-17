@@ -182,6 +182,26 @@ app.delete('/api/deleteCategory/:id', (req, res) => {
     });
 });
 
+// Delete a product
+app.delete('/api/products/:id', async (req, res) => {
+    const productId = req.params.id;
+
+    try {
+        // Delete the product from the database
+        const deletedProductCount = await Product.delete(productId);
+        
+        if (deletedProductCount === 0) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        // Send a success response
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 // อัพเดตหมวดหมู่
 app.put('/api/updateCategory/:id', (req, res) => {
     const id = req.params.id;
@@ -304,6 +324,8 @@ app.post('/editProduct/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
 
 module.exports = router;
 // Start the server
