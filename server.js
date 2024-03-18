@@ -106,7 +106,7 @@ app.post('/login', (req, res) => {
         if (user.email === 'admin' && user.password === 'admin') {
             res.redirect('/categoryManage');
         } else {
-            res.render('user/home'); // Render the user profile page using home.ejs
+            res.redirect('/home'); // Render the user profile page using home.ejs
         }        
     });
 });
