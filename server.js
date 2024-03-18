@@ -126,6 +126,14 @@ app.get('/productDetail', (req, res) => {
     res.render('user/productDetail');
 });
 
+app.get('/categoryManage', (req, res) => {
+    // Render the consoles page
+    res.render('admin/categoryManage');
+});
+
+
+
+
 app.get('/saleHistory', (req, res) => {
     res.render('admin/saleHistory');
 });
@@ -294,38 +302,27 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
-app.post('/editProduct/:id', async (req, res) => {
+// Update product data
+app.put('/api/products/:id', async (req, res) => {
     const productId = req.params.id;
-    const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory } = req.body;
+    const { productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount , productCategory} = req.body;
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(productId, {
-            productName,
-            productDescription,
-            productImages,
-            productPrice,
-            productPricePromotion,
-            productSalesCount,
-            productCategory
-        }, { new: true });
-
-        if (!updatedProduct) {
-            return res.status(404).send('Product not found');
-        }
-
-        // ดึงข้อมูลสินค้าทั้งหมดอีกรอบเพื่อใช้สำหรับแสดงผลหน้า productCategory.ejs
-        const products = await Product.findAll();
-        // ดึงข้อมูลหมวดหมู่ทั้งหมด
-        const categories = await Category.findAll();
-        // ส่งข้อมูลสินค้าและข้อมูลหมวดหมู่ไปยังหน้า productCategory.ejs
-        res.render('admin/productCategory', { products, categories, product: updatedProduct });
+        // Update the product data in the database
+        const sql = 'UPDATE products SET product_name = ?, product_description = ?, product_images = ?, product_price = ?, product_price_promotion = ?, product_sales_count = ?, category_id = ?  WHERE id = ?';
+        connection.query(sql, [productName, productDescription, productImages, productPrice, productPricePromotion, productSalesCount, productCategory, productId], (err, result) => {
+            if (err) {
+                console.error('Error executing SQL query:', err);
+                return res.status(500).json({ error: 'Error updating product' });
+            }
+            console.log('Product updated successfully:', result);
+            res.sendStatus(200);
+        });
     } catch (error) {
         console.error('Error updating product:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
 
 module.exports = router;
 // Start the server
