@@ -61,6 +61,20 @@ app.post('/signup', (req, res) => {
     });
 });
 
+
+app.get('/categoryManage', async (req, res) => {
+    try {
+        const categories = await Category.findAll();
+        console.log(categories); // Add this line to check the contents of the categories variable
+
+        const products = await Product.findAllWithCategory();
+        res.render('admin/categoryManage', { categories, products });
+    } catch (error) {
+        console.error('Error rendering product category:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 //login 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -90,7 +104,7 @@ app.post('/login', (req, res) => {
         // Check if the user is admin
         const user = results[0];
         if (user.email === 'admin' && user.password === 'admin') {
-            res.render('admin/categoryManage'); // Render the admin dashboard using categoryManage.ejs
+            res.redirect('/categoryManage');
         } else {
             res.render('user/home'); // Render the user profile page using home.ejs
         }        
@@ -125,12 +139,6 @@ app.get('/productDetail', (req, res) => {
     // Render the consoles page
     res.render('user/productDetail');
 });
-
-app.get('/categoryManage', (req, res) => {
-    // Render the consoles page
-    res.render('admin/categoryManage');
-});
-
 
 
 
@@ -323,6 +331,8 @@ app.put('/api/products/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
 
 module.exports = router;
 // Start the server
