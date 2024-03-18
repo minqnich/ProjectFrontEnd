@@ -62,111 +62,28 @@
         </button>
     </div>
 
-    <h2 class="TextTop5">
-        TOP 5 GAMES IN YOUR COUNTRY FOR PS5
-    </h2>
+    <h2 class="TextTop5">Top 5 Games in Your Country for PS5</h2>
     <section id="features">
         <div class="games">
             <div class="container-fluid row">
-
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card w-96 glass">
-                        <figure><img src="/img/G2.webp" alt="car!" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title">God of war RAGNAROK</h2>
-                            <p>How to park your car at your garage?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn btn-primary">ADD TO CART</button>
+                <% ps5Games.forEach(game => { %>
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="card w-96 glass">
+                            <figure><img src="<%= game.product_images %>" alt="<%= game.product_name %>" /></figure>
+                            <div class="card-body">
+                                <h2 class="card-title"><%= game.product_name %></h2>
+                                <p>Price: $<%= game.product_price %></p>
+                                <div class="card-actions justify-end">
+                                    <button class="btn btn-primary">ADD TO CART</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card w-96 glass">
-                        <figure><img src="/img/G1.avif" alt="car!" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title">SPIDER-MAN 2</h2>
-                            <p>How to park your car at your garage?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn btn-primary">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card w-96 glass">
-                        <figure><img src="/img/G3.avif" alt="car!" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title">AVATAR</h2>
-                            <p>How to park your car at your garage?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn btn-primary">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card w-96 glass">
-                        <figure><img src="/img/G4.avif" alt="car!" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title">RISE OF THE RONIN</h2>
-                            <p>How to park your car at your garage?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn btn-primary">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card w-96 glass">
-                        <figure><img src="/img/G1.avif" alt="car!" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title">SPIDER-MAN 2</h2>
-                            <p>How to park your car at your garage?</p>
-                            <div class="card-actions justify-end">
-                                <button class="btn btn-primary">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-        </div>
+                <% }); %>
+            </div>
         </div>
     </section>
-
-    <h2 class="TextTop5">
-        Top 5 games in your country for Nintendo Switch
-    </h2>
-        <!-- <div class="games">
-          
-            <img src="/img/G1.jpg" alt="img" >
-            <img src="/img/G2.jpg" alt="img" >
-            <img src="/img/G3.jpg" alt="img" >
-            <img src="/img/G4.jpg" alt="img" >
-            <img src="/img/G5.jpg" alt="img" >
-            <div class="message-container">
-              <p class="message">Message 2</p>
-            </div>
-            <div class="message-container">
-              <p class="message">Message 2</p>
-            </div>
-            <div class="message-container">
-              <p class="message">Message 2</p>
-            </div>
-            <div class="message-container">
-              <p class="message">Message 2</p>
-            </div>
-            <div class="message-container">
-              <p class="message">Message 2</p>
-            </div>
-        </div> -->
+    
         
         <div class="img-container">
           <img src="/img/footer.png" alt="img" width="100%" height="500px">

@@ -111,10 +111,20 @@ app.post('/login', (req, res) => {
     });
 });
 app.get('/home', (req, res) => {
-    // Render the consoles page
-    res.render('user/home');
-});
+    // Query to fetch PS5 games from the database
+    const query = "SELECT * FROM products WHERE category_id = (SELECT id FROM categories WHERE category_name = 'PS5') LIMIT 5";
 
+    // Execute the query
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching PS5 games: ', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        // Render the home page with PS5 games data
+        res.render('user/home', { ps5Games: results });
+    });
+});
 app.get('/consoles', (req, res) => {
     // Render the consoles page
     res.render('user/consoles');
