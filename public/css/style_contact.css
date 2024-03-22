@@ -26,6 +26,10 @@ header{
     font-size: 60px;
 }
 
+.contact-container{
+    margin-bottom: 30%;
+}
+
 #fcf-form {
     display:block;
 }
@@ -132,6 +136,11 @@ label.fcf-label {
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.footerContact {
+    position: absolute;
+    top: 30%; /* Adjust this value based on your requirement */
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     .fcf-btn {

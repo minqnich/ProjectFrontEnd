@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sales History</title>
-    <link rel="stylesheet" href="/css/style_backoffice.css" />
+    <link rel="stylesheet" href="/css/style_backoffice2.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -217,7 +217,48 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="scripts.js"></script>
+
+    <script>
+async function recordSale(bill_id, bill_date, bill_price) {
+    try {
+        const saleData = {
+            bill_id: bill_id,
+            bill_date: bill_date,
+            bill_price: bill_price
+        };
+
+        const saleId = await SalesHistory.recordSale(saleData);
+        console.log("Sale recorded with ID:", saleId);
+    } catch (error) {
+        console.error("Error recording sale:", error);
+    }
+}
+
+// เมื่อคลิกที่ปุ่ม "Bill Summary"
+document.querySelector('a[href="#billSum"]').addEventListener("click", () => {
+    // สร้างหรือกำหนด bill_id
+    const bill_id = generateBillId();
+    // สร้างวันที่ปัจจุบัน
+    const bill_date = new Date();
+    // ราคารวมของบิล (ในที่นี้เป็น 0 เนื่องจากข้อมูลไม่ถูกนำมาจากฐานข้อมูล)
+    const bill_price = 0;
+    // เรียกใช้เมธอด recordSale() เพื่อบันทึกข้อมูลการขาย
+    recordSale(bill_id, bill_date, bill_price);
+});
+
+// เมื่อคลิกที่ปุ่ม "Best Seller"
+document.querySelector('a[href="#bestSell"]').addEventListener("click", () => {
+    // สร้างหรือกำหนด bill_id
+    const bill_id = generateBillId();
+    // สร้างวันที่ปัจจุบัน
+    const bill_date = new Date();
+    // ราคารวมของบิล (ในที่นี้เป็น 0 เนื่องจากข้อมูลไม่ถูกนำมาจากฐานข้อมูล)
+    const bill_price = 0;
+    // เรียกใช้เมธอด recordSale() เพื่อบันทึกข้อมูลการขาย
+    recordSale(bill_id, bill_date, bill_price);
+});
+
+    </script>
   </body>
 </html>
 

@@ -1,5 +1,6 @@
 footer {
-    background-color: #5498ff; /* Background color for the footer */
+    background: rgb(30,102,200);
+    background: linear-gradient(38deg, rgba(30,102,200,1) 20%, rgba(53,19,159,1) 76%);   
     text-align: center;
     margin-top: 50px;
 }
@@ -25,9 +26,18 @@ footer {
     margin: 10px;
     border-radius: 50%;
     margin: 30px;
+    width: 60px;
+    height: 60px;
     
 }
 
 .footerContainer .socialIcons i {
     font-size: 20px; /* Adjust the font size of the icons */
+}
+.img-container{
+    top: 0; 
+    transform: translateY(-50%);
+}
+p{
+    color:#fff;
 }

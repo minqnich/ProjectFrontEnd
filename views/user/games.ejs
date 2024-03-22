@@ -44,27 +44,30 @@
             </div>
         </div>  
         <h1 class="text">Games</h1>  
-        <h2 class="game">
-            Playstation Games
-        </h2>
-        <div class="games">
-            <img src="/img/ps_g1.jpg" alt="img" >
-            <img src="/img/ps_g2.jpg" alt="img" >
-            <img src="/img/ps_g3.jpg" alt="img" >
-            <img src="/img/ps_g4.jpg" alt="img" >
-            <img src="/img/G4.jpg" alt="img" >
-
-        </div>
-        <h2 class="game">
-            Nintendo Games
-        </h2>
-        <div class="games">
-            <img src="/img/nin_g1.jpg" alt="img" >
-            <img src="/img/nin_g2.jpg" alt="img" >
-            <img src="/img/nin_g3.jpg" alt="img" >
-            <img src="/img/nin_g4.jpg" alt="img" >
-
-        </div>
+        
+        <section id="features">
+          <div class="games">
+            <div class="container-fluid row">
+              <% games.forEach(games => { %>
+              <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="card w-96 glass" data-product-id="<%= games.id %>">
+                  <figure>
+                    <img
+                      src="<%= games.product_images %>"
+                      alt="<%= games.product_name %>"
+                    />
+                  </figure>
+                  <div class="card-body">
+                    <h2 class="card-title"><%= games.product_name %></h2>
+                    <p>Price: $<%= games.product_price %></p>
+                    <div class="card-actions justify-end"></div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+        </section>
         <footer>
             <div class="footerContainer">
               <div class="socialIcons">
@@ -80,5 +83,23 @@
   
           </footer>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+          <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+        const productCards = document.querySelectorAll(".card");
+
+        productCards.forEach((card) => {
+          card.addEventListener("click", function () {
+            const productId = card.getAttribute("data-product-id");
+
+            if (productId) {
+              // Redirect ไปยังหน้า productDetail พร้อมส่ง productId ไปด้วย
+              window.location.href = "/productDetail/" + productId;
+            } else {
+              console.error("productId is null or undefined");
+            }
+          });
+        });
+      });
+          </script>
     </body>
 </html>    

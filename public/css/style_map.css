@@ -22,7 +22,8 @@ body {
 
 .contact-container{
     display: flex;
-    margin: 155px auto;
+    margin: 155px 0px 0px 100px;
+    margin-bottom: 0px;
     max-width: 960px;
     width: 100%;
     display: grid;

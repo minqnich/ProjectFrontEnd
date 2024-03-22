@@ -34,7 +34,7 @@ header{
 .navbar a{
     position: relative;
     font-size: 18px;
-    color: black;
+    color: gray;
     font-weight: 500;
     text-decoration: none;
     margin-left: 40px;
@@ -89,29 +89,15 @@ header{
     height: 3px;
     background-color: lightgray;
 }
-.pro_content{
-    margin-top: 6rem;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    display: none;
-}
-.pro_content > img{
-    border-radius: 10px;
-    width: 60%;
-}
-.total{
-    font-weight: 600;
-}
-.cart_empty{
-    text-align: center;
-    font-weight: 600;
-    padding: 3rem 0rem;
-}
-.cart_empty p {
-    padding: 3rem 0;
 
+.imgincart{
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
 }
-.trash{
-    font-size: 20px;
+
+.imageee{
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
 }

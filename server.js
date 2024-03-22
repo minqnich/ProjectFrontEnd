@@ -125,14 +125,36 @@ app.get('/home', (req, res) => {
         res.render('user/home', { ps5Games: results });
     });
 });
+
 app.get('/consoles', (req, res) => {
-    // Render the consoles page
-    res.render('user/consoles');
+    // Query to fetch PS5 games from the database
+    const query = "SELECT * FROM products WHERE category_id = (SELECT id FROM categories WHERE category_name = 'Console')";
+
+    // Execute the query
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching PS5 games: ', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.render('user/consoles', { consoles: results });
+    });
 });
 
+
 app.get('/accessories', (req, res) => {
-    // Render the consoles page
-    res.render('user/accessories');
+    // Query to fetch PS5 games from the database
+    const query = "SELECT * FROM products WHERE category_id = (SELECT id FROM categories WHERE category_name = 'Accessories')";
+
+    // Execute the query
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching Accessories: ', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.render('user/accessories', { accessories: results });
+    });
 });
 
 app.get('/contact', (req, res) => {
@@ -140,15 +162,44 @@ app.get('/contact', (req, res) => {
     res.render('user/contact');
 });
 
-app.get('/games', (req, res) => {
-    // Render the consoles page
-    res.render('user/games');
+
+
+app.get('/success', (req, res) => {
+    // Render  consoles page
+    res.render('user/success');
 });
 
-app.get('/productDetail', (req, res) => {
-    // Render the consoles page
-    res.render('user/productDetail');
+app.get('/games', (req, res) => {
+    // Query to fetch PS5 games from the database
+    const query = "SELECT * FROM products WHERE category_id = (SELECT id FROM categories WHERE category_name = 'Game')";
+
+    // Execute the query
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching games: ', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.render('user/games', { games: results });
+    });
 });
+
+app.get('/productDetail/:id', async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const product = await Product.findById(productId);
+
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        
+        res.render('user/productDetail', { product });
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        res.status(500).json({ error: 'Error fetching product' });
+    }
+});
+
 
 
 
@@ -175,17 +226,20 @@ app.get('/api/categories', (req, res) => {
 });
 
 app.post('/api/addCategory', (req, res) => {
-    const { category_name } = req.body;
+    const { category_name } = req.body; // Get the category name information sent by the user via the request body.
   
-    // เพิ่มหมวดหมู่ลงในฐานข้อมูล
+    // Add categories to the database
+    // Create an SQL statement for adding new category data.
     const sql = 'INSERT INTO categories (category_name) VALUES (?)';
     connection.query(sql, [category_name], (err, result) => {
+        // In case of an error adding data
       if (err) {
         console.error('Error executing SQL query:', err);
         return res.status(500).json({ error: 'Error executing SQL query: ' + err.message });
       }
+      // In case of adding data successfully
       console.log('Category added successfully:', result);
-      res.sendStatus(200); // ส่งกลับสถานะ 200 OK เมื่อเพิ่มหมวดหมู่สำเร็จ
+      res.sendStatus(200); // Returns a 200 OK status to notify the user that the category addition was successful.
     });
 });
 
@@ -207,6 +261,7 @@ app.delete('/api/deleteCategory/:id', (req, res) => {
         res.sendStatus(200);
     });
 });
+
 
 // Delete a product
 app.delete('/api/products/:id', async (req, res) => {
@@ -341,6 +396,26 @@ app.put('/api/products/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.get('/api/add_to_cart/:id', async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const product = await Product.getProductById(productId); // Await the promise returned by getProductById function
+        if (!product) {
+            // If product is not found, send a 404 response
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        // If product is found, send it back as a JSON response
+        res.json(product);
+    } catch (error) {
+        // If there's an error, log it and send a 500 response
+        console.error('Error fetching product:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+app.get('/success', (req, res) => {
+    res.redirect('success')
+})
 
 
 

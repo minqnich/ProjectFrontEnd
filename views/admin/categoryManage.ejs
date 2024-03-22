@@ -17,6 +17,7 @@
 
 body{
   min-height: 100vh;
+  padding-bottom: 8%;
   background: rgb(3,2,18);
   background: linear-gradient(180deg, rgba(3,2,18,1) 0%, rgba(6,43,157,1) 100%);
   background-size: cover;
@@ -325,89 +326,29 @@ img.item{
           </div>
         </div>
       </div>
-  <div class="text-white">
-      <% categories.forEach(category => { %>
-        <h2><%= category.category_name %></h2>
-        <ul >
-            <% products.filter(product => product.category_id === category.id).forEach(product => { %>
-                <li>
-                    <h3><%= product.product_name %></h3>
-                    <img class="item" src="<%= product.product_images %>" alt="<%= product.product_name %>" />
-                    <p>Description: <%= product.product_description %></p>
-                    <p>Price: $<%= product.product_price %></p>
-                </li>
-            <% }); %>
-        </ul>
-    <% }); %>
-  </div>
-
-    <!-- Console Categories 
-    <div class="product-container">
-      <h2 class="headline-product fw-bolder">Console</h2>
-      <button class="btn btn-secondary">Edit</button>
-      <button class="btn btn-danger">Delete</button>
-    </div>
-    <h2 class="text-product">Playstation Console</h2>
-    <div class="row row-cols-4">
-      <img src="/img/ps_g1.jpg" class="col mb-4" />
-      <img src="/img/ps_g2.jpg" class="col mb-4" />
-      <img src="/img/ps_g3.jpg" class="col mb-4" />
-      <img src="/img/ps_g4.jpg" class="col mb-4" />
-      <img src="/img/G4.jpg" class="col mb-4" />
-    </div>
-
-    <h2 class="text-product">Nintendo Console</h2>
-    <div class="row row-cols-4">
-      <img src="/img/nin_g1.jpg" class="col mb-4" />
-      <img src="/img/nin_g2.jpg" class="col mb-4" />
-      <img src="/img/nin_g3.jpg" class="col mb-4" />
-      <img src="/img/nin_g4.jpg" class="col mb-4" />
-    </div>
-
-
-    Game Categories
-    <div class="product-container">
-      <h2 class="headline-product fw-bolder">Game</h2>
-      <button class="btn btn-secondary">Edit</button>
-      <button class="btn btn-danger">Delete</button>
-    </div>
-    <h2 class="text-product">Playstation Games</h2>
-    <div class="row row-cols-4">
-      <img src="/img/ps_g1.jpg" class="col mb-4" />
-      <img src="/img/ps_g2.jpg" class="col mb-4" />
-      <img src="/img/ps_g3.jpg" class="col mb-4" />
-      <img src="/img/ps_g4.jpg" class="col mb-4" />
-      <img src="/img/G4.jpg" class="col mb-4" />
-    </div>
-
-    <h2 class="text-product">Nintendo Games</h2>
-    <div class="row row-cols-4">
-      <img src="/img/nin_g1.jpg" class="col mb-4" />
-      <img src="/img/nin_g2.jpg" class="col mb-4" />
-      <img src="/img/nin_g3.jpg" class="col mb-4" />
-      <img src="/img/nin_g4.jpg" class="col mb-4" />
-    </div> -->
-
-    <!-- Acessories Categories -->
-    <!-- <div class="product-container">
-      <h2 class="headline-product fw-bolder">Acessories</h2>
-      <button class="btn btn-secondary">Edit</button>
-      <button class="btn btn-danger">Delete</button>
-    </div>
-    <h2 class="text-product">Playstation Acessories</h2>
-    <div class="row row-cols-4">
-      <img src="/img/ps_headphone.jpg" class="col mb-4" />
-      <img src="/img/ps_joystick.jpg" class="col mb-4" />
-      <img src="/img/ps_wheel.jpg" class="col mb-4" />
-    </div>
-
-    <h2 class="text-product">Nintendo Acessories</h2>
-    <div class="row row-cols-4">
-      <img src="/img/nin_wheel.jpg" class="col mb-4" />
-      <img src="/img/nin_joycon.jpg" class="col mb-4" />
-      <img src="/img/nin_joy.jpg" class="col mb-4" />
-      <img src="/img/nin_g4.jpg" class="col mb-4" />
-    </div> -->
+      
+      <div class="container">
+        <div class="text-white" style="padding-top: 50px;"> <!-- เพิ่ม padding-top เพื่อย้ายเนื้อหาลงมาบนหน้าจอ -->
+          <% categories.forEach(category => { %>
+            <h2 class="text-uppercase mb-4" style="color:  #fff; margin-top: 50px;"><%= category.category_name %></h2> <!-- เพิ่มสีข้อความเป็นสีขาว -->
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              <% products.filter(product => product.category_id === category.id).forEach(product => { %>
+                <div class="col">
+                  <div class="card border-0 shadow" style="background-color: #f8f9fa; height: 100%;"> <!-- เปลี่ยนสีพื้นหลังให้เป็นสีเทาอ่อนและกำหนดความสูงของ card เป็น 100% -->
+                    <img style="width: 260px; height: 300px;" src="<%= product.product_images %>" class="card-img-top mx-auto d-block" alt="<%= product.product_name %>">
+                    <div class="card-body">
+                      <h5 class="card-title mb-3" style="color: #000;"><%= product.product_name %></h5> <!-- เปลี่ยนสีข้อความเป็นสีดำ -->
+                      <p class="card-text text-muted mb-0">Price: $<%= product.product_price %></p> <!-- เพิ่ม text-muted เพื่อทำให้ข้อความเป็นสีเทาอ่อน และลบระยะห่างด้านล่าง -->
+                    </div>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+      
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap Bundle with Popper -->

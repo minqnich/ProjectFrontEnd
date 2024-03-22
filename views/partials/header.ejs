@@ -1,0 +1,53 @@
+<header class="header">
+    <a href="/home" class="logo"
+      ><img src="img/PS5.png" alt="logo" width="200" height="100"
+    /></a>
+    <nav class="navbar">
+      <a href="/home">Home</a>
+      <!-- bootstrap -->
+      <div class="dropdown">
+        <a
+          class="dropdown-toggle"
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+        >
+          Product
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li><a class="dropdown-item" href="/consoles">Consoles</a></li>
+          <li><a class="dropdown-item" href="/games">Games</a></li>
+          <li>
+            <a class="dropdown-item" href="/accessories">Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <span class="qty_label">3</span>
+      <a href="/contact">CONTACT US</a>
+      <a href="#" id="cartBtn" class="cart">Cart</a>
+      <a href="/login">Log out</a>
+    </nav>
+
+    <div class="cart_box">
+      <p class="box_header">Cart</p>
+      <div class="pro_content">
+        <div class="p_details">
+          <p class="pro_txt"></p>
+          <p class="price">
+           <span>x</span>
+            <span class="times"> 3</span>
+            <span class="total">= $105</span>
+          </p>
+        </div>
+      </div>
+      <div class="cart_empty">
+        <p>Your Cart is empty</p>
+      </div>
+      <div class="trash">
+        <i id="trashIcon" class="bx bxs-trash"></i>
+        <button class="checkout">checkout</button>
+      </div>
+    </div>
+  </header>

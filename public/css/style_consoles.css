@@ -17,7 +17,7 @@
   /* Styles for the carousel items */
   .carousel-item img {
     width: 100%; /* Ensure images fill the carousel container */
-    height: 500px; /* Maintain aspect ratio */
+    height: 520px; /* Maintain aspect ratio */
   }
   .text{
     color: #fff;
@@ -25,18 +25,45 @@
     font-size: 60px;
     text-align: center;
   }
-  .game{
-    color: #fff;
-    margin-top: 50px;
-    margin-left: 50px;
-    font-size: 32px;
-    text-align: left;
-  }
-  .games img{
-    width: 200px;
-    height: 250px;
-    margin-top: 50px;
-    border: 2px  ;
-    margin: 50px ;
+  .card-title {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* เปลี่ยนฟ้อนต์เป็น Arial */
+    font-size: 20px; /* ปรับขนาดฟ้อนต์ตามต้องการ */
+    color: whitesmoke; /* เปลี่ยนสีข้อความตามต้องการ */
   }
   
+  .games img{
+    width: 150px;
+    height: 200px;
+    margin: 0;
+    margin-top: 90px;
+    border: 10px  ;
+    margin: 10px ;
+    align-items: center;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+  
+  .card .card-body {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 20px;
+  }
+  
+  .card .card-body .btn{
+    background: rgb(132,132,227);
+  }
+  
+  .games{
+    display: flex;
+      align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางในแนวนอน */
+      text-align: center;
+  }
+  .games .card {
+    margin: 60px;
+    border-radius: 30px;
+    border: 1px solid rgb(40, 40, 40); /* เพิ่มเส้นขอบสีเทาเข้ม */
+    transition: border-color 0.3s; /* เพิ่มเอฟเฟกต์ transition เพื่อทำให้การเปลี่ยนแปลงเส้นขอบเนื่องจาก hover เกิดขึ้นอย่างนุ่มนวล */
+    background: rgb(38,38,39);
+    background: linear-gradient(0deg, rgba(38,38,39,1) 10%, rgba(0,0,0,1) 83%);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* เพิ่มเอฟเฟกต์เงา และเปลี่ยนสีเงาเป็นสีดำ */
+  }

@@ -67,22 +67,32 @@
         <h2 class="headline-product fw-bolder">All of product</h2>
         <button class="add-button" data-bs-toggle="modal" data-bs-target="#addProductModal">+</button>
       </div>
+      
       <div class="bg-categories">
         <div class="container-fluid row">
-        <div class="row row-cols-lg-3 row-cols-md-4 row-cols-sm-6">
-          <% products.forEach(product => { %>
-            <div class="col mb-5 position-relative" id="product_<%= product.id %>">
-              <img src="<%= product.product_images %>" alt="<%= product.product_name %>" />
-              <h1 class="text-center fs-5 mt-3 text-white"><%= product.product_name %></h1>
-            <div class="btn-group position-absolute top-0 start-55 translate-middle pb-4">
-              <button class="btn btn-secondary" onclick="openEditModal('<%= product.id %>')">Edit</button>
-              <button class="btn btn-danger" onclick="deleteProduct('<%= product.id %>')">Delete</button> <!-- Add onclick event -->
-            </div>
+          <div class="row row-cols-lg-3 row-cols-md-4 row-cols-sm-6">
+            <% products.forEach(product => { %>
+              <div class="col mb-5 position-relative" id="product_<%= product.id %>">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="<%= product.product_images %>" alt="<%= product.product_name %>">
+                  <div class="card-body">
+                    <h5 class="card-title text-center fs-5 mt-3 text-black"><%= product.product_name %></h5>
+                    <div class="btn-group position-absolute top-0 start-50 translate-middle pb-4">
+                      <button class="btn btn-secondary" onclick="openEditModal('<%= product.id %>')">Edit</button>
+                      <button class="btn btn-danger" onclick="deleteProduct('<%= product.id %>')">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
           </div>
-          <% }); %>
         </div>
-      </div>   
-    </div>   
+      </div>
+
+
+
+
+
 
  <!-- Modal for adding product -->
  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
@@ -231,11 +241,14 @@
   
   
   function openEditModal(productId) {
+    // Start fetching product information from the API using the Fetch API.
           fetch(`/api/products/${productId}`)
               .then(response => {
+                // Check the status of the API call
                   if (!response.ok) {
                       throw new Error('Failed to fetch product data');
                   }
+                  // Convert received data to JSON.
                   return response.json();
               })
               .then(productData => {
@@ -249,9 +262,11 @@
       document.getElementById('editProductId').value = productId; 
       document.getElementById('editProductCategory').value = productData.category_id; 
       console.log(productData.category_id)
+      // Show Modal for editing product information
       $('#editProductModal').modal('show'); 
   })
               .catch(error => {
+                // Handle errors in retrieving product information
                   console.error('Error fetching product data:', error);
                   alert('Failed to fetch product data');
               });

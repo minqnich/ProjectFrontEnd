@@ -119,7 +119,10 @@ header {
 }
 .row {
   position: relative;
+  
+
 }
+
 
 .btn-group {
   position: absolute;
@@ -147,7 +150,7 @@ header {
 .row img{
   width: 250px;
   height: 250px;
-  margin-left: 120px;
+  margin-left: 20px;
 }
 
 .btn{
@@ -162,6 +165,11 @@ header {
   margin-bottom: 90px;
   font-size: 24px;
 }
+
+.bg-categories {
+margin-left: 9%;
+}
+
 
 .product-container {
   display: flex;

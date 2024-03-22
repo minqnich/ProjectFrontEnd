@@ -36,6 +36,14 @@ class Product extends BaseSQLModel {
     const product = await this.findById(productId);
     return product ? product.category_id : null;
   }
+
+  async getProductById(productId){
+    const product = await this.findById(productId);
+    return product
+  }
+
+
 }
+
 
 module.exports = new Product();

@@ -41,7 +41,9 @@
     margin-left: 50px;
     margin-bottom: 2%;
     font-size: 24px;
-}
+    font-weight: 600;
+    font-family: "Inter Tight", sans-serif;
+  }
 
 
 .container {
@@ -98,10 +100,14 @@
 .games .card {
   margin: 60px;
   border-radius: 30px;
-  border: 2px #fff;
-  background: rgb(84,92,103);
-  background: linear-gradient(0deg, rgba(84,92,103,1) 0%, rgba(9,12,17,1) 63%);
+  border: 1px solid rgb(40, 40, 40); /* เพิ่มเส้นขอบสีเทาเข้ม */
+  transition: border-color 0.3s; /* เพิ่มเอฟเฟกต์ transition เพื่อทำให้การเปลี่ยนแปลงเส้นขอบเนื่องจาก hover เกิดขึ้นอย่างนุ่มนวล */
+  background: rgb(38,38,39);
+  background: linear-gradient(0deg, rgba(38,38,39,1) 10%, rgba(0,0,0,1) 83%);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* เพิ่มเอฟเฟกต์เงา และเปลี่ยนสีเงาเป็นสีดำ */
 }
+
+
 
 .message-container {
   display: inline-block;
@@ -118,4 +124,9 @@
   font-size: 14px;
 }
 
-
+@media (max-width: 768px) {
+  .carousel-item img {
+    max-width: 100%;
+    height: auto;
+  }
+}
